@@ -9,7 +9,7 @@ class ValPos(NamedTuple):
 
 def de_position(input_number: int) -> list[int]:
     positions: list[int] = []
-    while input_number:
+    while input_number: # this is dumb and will break if the number ends in zero
         positions.append(input_number % 10)
         input_number = input_number // 10
     positions.reverse()
@@ -48,7 +48,7 @@ def process(positions: list[int], digit_count: int, result_digits: list[int]) ->
 result_sum: int = 0
 with open(INPUT_FILE) as f:
     for line in f:
-        in_number = int(line)
+        in_number = int(line) # this is wildly optimistic with a long input string - idk how python does it
         positions = de_position(in_number)
 
         result_digits: list[int] = []
