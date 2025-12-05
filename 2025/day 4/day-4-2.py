@@ -1,5 +1,5 @@
 import numpy as np
-import scipy.ndimage # type: ignore
+import scipy.ndimage as snd # type: ignore
 
 INPUT_FILE = 'day-4 input.txt'
 
@@ -21,14 +21,18 @@ kernel = np.array([[1,1,1],
                    [1,1,1]])
 
 total_removed = 0
+loops = 0
+print(f"Starting with {snd.sum_labels(start_grid)} rolls") # type: ignore
 while True:
-    neighbor_counts = scipy.ndimage.convolve(start_grid, kernel, mode='constant', cval=0) # type: ignore
-    filtered = scipy.ndimage.generic_filter(neighbor_counts, lambda x: 1 if x < 4 else 0, 1) # type: ignore
+    neighbor_counts = snd.convolve(start_grid, kernel, mode='constant', cval=0) # type: ignore
+    filtered = snd.generic_filter(neighbor_counts, lambda x: 1 if x < 4 else 0, 1) # type: ignore
     masked = filtered * start_grid # type: ignore
-    removable = scipy.ndimage.sum_labels(masked) # type: ignore
+    removable = snd.sum_labels(masked) # type: ignore
     if removable == 0:
         break
     total_removed += removable
+    loops += 1
     start_grid = start_grid * (masked^1) # type: ignore
+    print(f"\r{removable:6d} / {total_removed:10d} / {loops:6d}", end="")
 
-print(f"{total_removed=}")
+print(f"\nTotal removed: {total_removed} Remaining: {snd.sum_labels(start_grid)}") # type: ignore
