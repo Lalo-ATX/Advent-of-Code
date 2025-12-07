@@ -13,7 +13,7 @@ function_map: dict[str, Callable[[list[int]], int | float]] = {
 with open(INPUT_FILE) as f:
     content = f.read()
 
-all_inputs = np.array([ re.split(r" +", line.strip()) for line in content.split("\n")])
+all_inputs = np.array([ re.split(r" +", line.strip()) for line in content.splitlines()])
 
 output_sum: int = 0
 for col_idx in range(np.size(all_inputs, 1)):

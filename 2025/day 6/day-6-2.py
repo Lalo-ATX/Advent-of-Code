@@ -21,7 +21,7 @@ def re_position(fields: list[str]) -> int:
 with open(INPUT_FILE) as f:
     content = f.read()
 
-all_stuff = np.array([list(row) for row in content.split("\n")]).transpose()
+all_stuff = np.array([list(row) for row in content.splitlines()]).transpose()
 
 group_function: Callable[[list[int]], int | float] | None = None
 group_arguments: list[int] = []
