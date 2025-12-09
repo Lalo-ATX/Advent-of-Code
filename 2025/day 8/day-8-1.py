@@ -58,8 +58,7 @@ net_points: list[set[Point]] = []
 
 # one pass
 network_serial = 0
-connection_limit = CONNECTION_LIMIT
-for edge in edges:
+for edge in edges[:CONNECTION_LIMIT]:
     if edge.point1 in point_net:
         p1_net_id = point_net[edge.point1]
         if edge.point2 in point_net:
@@ -90,10 +89,6 @@ for edge in edges:
             point_net[edge.point1] = network_serial
             point_net[edge.point2] = network_serial
             network_serial += 1
-
-    connection_limit -= 1
-    if not connection_limit:
-        break
 
 cleaned_netsets = collapse_sets(network_serial, network_links)
 net_sizes = sorted([fsum( [len(net_points[net_id]) for net_id in netset]) for netset in cleaned_netsets], reverse=True)
